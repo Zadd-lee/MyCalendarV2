@@ -6,10 +6,8 @@ import hello.mycalendarv2.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,10 +17,15 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<EventResponseDto> create(
-            @RequestBody CreateEventRequestDto dto
-            ) {
+            @Validated @RequestBody CreateEventRequestDto dto
+    ) {
         EventResponseDto eventResponseDto = eventService.createEvent(dto);
         return new ResponseEntity<>(eventResponseDto, HttpStatus.OK);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EventResponseDto> findById(@PathVariable Long id) {
+        EventResponseDto dto = eventService.findById(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }
