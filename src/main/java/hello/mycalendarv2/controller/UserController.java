@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,10 +20,17 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(
             @Validated @RequestBody CreateUserRequestDto dto) {
-
         UserResponseDto responseDto = userService.createUser(dto);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
-
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> findById(
+            @PathVariable Long id
+    ) {
+        UserResponseDto responseDto = userService.findById(id);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
 }

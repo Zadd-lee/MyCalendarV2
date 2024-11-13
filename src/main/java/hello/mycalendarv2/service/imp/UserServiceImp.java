@@ -19,4 +19,10 @@ public class UserServiceImp implements UserService {
         User savedUsers = userRepository.save(user);
         return new UserResponseDto(savedUsers);
     }
+
+    @Override
+    public UserResponseDto findById(Long id) {
+        User findUser = userRepository.findByIdOrElseThrows(id);
+        return new UserResponseDto(findUser);
+    }
 }

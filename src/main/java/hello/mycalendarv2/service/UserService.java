@@ -6,4 +6,6 @@ import hello.mycalendarv2.model.dto.UserResponseDto;
 
 public interface UserService {
     UserResponseDto createUser(CreateUserRequestDto dto);
+
+    UserResponseDto findById(Long id);
 }
