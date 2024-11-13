@@ -1,6 +1,7 @@
 package hello.mycalendarv2.controller;
 
 import hello.mycalendarv2.model.dto.CreateUserRequestDto;
+import hello.mycalendarv2.model.dto.DeleteUserRequestDto;
 import hello.mycalendarv2.model.dto.UserResponseDto;
 import hello.mycalendarv2.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,15 @@ public class UserController {
     ) {
         UserResponseDto responseDto = userService.findById(id);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id,
+            @Validated @RequestBody DeleteUserRequestDto dto
+    ) {
+        userService.delete(id,dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
