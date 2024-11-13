@@ -1,6 +1,7 @@
 package hello.mycalendarv2.controller;
 
 import hello.mycalendarv2.model.dto.CreateEventRequestDto;
+import hello.mycalendarv2.model.dto.DeleteEventRequestDto;
 import hello.mycalendarv2.model.dto.EventResponseDto;
 import hello.mycalendarv2.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -28,4 +29,11 @@ public class EventController {
         EventResponseDto dto = eventService.findById(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id, @Validated @RequestBody DeleteEventRequestDto dto) {
+        eventService.delete(id, dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -1,12 +1,14 @@
 package hello.mycalendarv2.service.imp;
 
 import hello.mycalendarv2.model.dto.CreateEventRequestDto;
+import hello.mycalendarv2.model.dto.DeleteEventRequestDto;
 import hello.mycalendarv2.model.dto.EventResponseDto;
 import hello.mycalendarv2.model.entity.Event;
 import hello.mycalendarv2.model.entity.User;
 import hello.mycalendarv2.repository.EventRepository;
 import hello.mycalendarv2.repository.UserRepository;
 import hello.mycalendarv2.service.EventService;
+import hello.mycalendarv2.util.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EventServiceImp implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private UserValidator validator = new UserValidator();
 
     @Transactional
     @Override
@@ -32,5 +35,13 @@ public class EventServiceImp implements EventService {
     public EventResponseDto findById(Long id) {
         Event findEventById = eventRepository.findByIdOrElseThrows(id);
         return new EventResponseDto(findEventById);
+    }
+
+    @Transactional
+    @Override
+    public void delete(Long id, DeleteEventRequestDto dto) {
+        Event event = eventRepository.findByIdOrElseThrows(id);
+        validator.validatePassword(event.getUser().getPassword(), dto.getPassword());
+        eventRepository.deleteById(id);
     }
 }

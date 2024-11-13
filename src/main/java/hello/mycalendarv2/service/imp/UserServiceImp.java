@@ -32,7 +32,7 @@ public class UserServiceImp implements UserService {
     @Override
     public void delete(Long id, DeleteUserRequestDto dto) {
         User user = userRepository.findByIdOrElseThrows(id);
-        validator.validatePassword(user, dto.getPassword());
+        validator.validatePassword(user.getPassword(), dto.getPassword());
         userRepository.deleteById(id);
     }
 }
