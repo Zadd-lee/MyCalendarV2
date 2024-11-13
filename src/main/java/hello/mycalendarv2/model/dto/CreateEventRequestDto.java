@@ -1,6 +1,7 @@
 package hello.mycalendarv2.model.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ public class CreateEventRequestDto {
     private String title;
     private String contexts;
     @NotNull
+    @Size(max = 8)
     private String userName;
 
 }
