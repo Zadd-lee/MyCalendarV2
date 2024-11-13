@@ -1,5 +1,6 @@
 package hello.mycalendarv2.model.entity;
 
+import hello.mycalendarv2.model.dto.CreateUserRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,10 @@ public class User extends DateEntity{
 
     @OneToMany(mappedBy = "user")
     private List<Event> events = new ArrayList<>();
+
+    public User(CreateUserRequestDto dto) {
+        this.name = dto.getName();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+    }
 }
