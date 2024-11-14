@@ -12,14 +12,18 @@ import hello.mycalendarv2.util.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
 public class EventServiceImp implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+
+    private final UserValidator validator;
 
     @Transactional
     @Override
@@ -42,10 +46,15 @@ public class EventServiceImp implements EventService {
     @Override
     public void delete(Long id, DeleteRequestDto dto) {
         Event event = eventRepository.findByIdOrElseThrows(id);
-        UserValidator validator = new UserValidator();
 
-        validator.validatePassword(event.getUser().getPassword(), dto.getPassword());
+        validateUser(dto, event);
         eventRepository.deleteById(id);
+    }
+
+    private void validateUser(DeleteRequestDto dto, Event event) {
+        if (validator.validatePassword(event.getUser().getPassword(), dto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "비밀번호 오류");
+        }
     }
 
     @Override

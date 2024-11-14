@@ -12,7 +12,9 @@ import hello.mycalendarv2.repository.UserRepository;
 import hello.mycalendarv2.service.CommentService;
 import hello.mycalendarv2.util.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class CommentServiceImp implements CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final UserValidator validator;
     @Override
     public CommentResponseDto create(CreateCommentRequestDto dto) {
         User userById = userRepository.findByIdOrElseThrows(dto.getUserId());
@@ -41,9 +44,14 @@ public class CommentServiceImp implements CommentService {
     @Override
     public void delete(Long id, DeleteRequestDto dto) {
         Comment comment = commentRepository.findByIdOrElseThrows(id);
-        UserValidator validator = new UserValidator();
-        validator.validatePassword(comment.getUser().getPassword(), dto.getPassword());
+        validateUser(dto, comment);
         commentRepository.delete(comment);
 
+    }
+
+    private void validateUser(DeleteRequestDto dto, Comment comment) {
+        if (validator.validatePassword(comment.getUser().getPassword(), dto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "비밀번호 오류");
+        }
     }
 }
