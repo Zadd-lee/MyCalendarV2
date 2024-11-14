@@ -2,8 +2,10 @@ package hello.mycalendarv2.model.dto;
 
 import hello.mycalendarv2.model.entity.Event;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class EventResponseDto {
 
     private Long id;

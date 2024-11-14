@@ -1,12 +1,10 @@
 package hello.mycalendarv2.model.dto;
 
 import hello.mycalendarv2.model.entity.Comment;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class CommentResponseDto {
     private Long id;
