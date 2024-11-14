@@ -27,4 +27,12 @@ public class CommentServiceImp implements CommentService {
         Comment savedComment = commentRepository.save(comment);
         return new CommentResponseDto(savedComment);
     }
+
+    @Override
+    public CommentResponseDto findById(Long id) {
+        Comment commentById = commentRepository.findByIdOrElseThrows(id);
+        return new CommentResponseDto(commentById);
+
+
+    }
 }
