@@ -1,7 +1,7 @@
 package hello.mycalendarv2.service.imp;
 
 import hello.mycalendarv2.model.dto.CreateEventRequestDto;
-import hello.mycalendarv2.model.dto.DeleteEventRequestDto;
+import hello.mycalendarv2.model.dto.DeleteRequestDto;
 import hello.mycalendarv2.model.dto.EventResponseDto;
 import hello.mycalendarv2.model.entity.Event;
 import hello.mycalendarv2.model.entity.User;
@@ -38,7 +38,7 @@ public class EventServiceImp implements EventService {
 
     @Transactional
     @Override
-    public void delete(Long id, DeleteEventRequestDto dto) {
+    public void delete(Long id, DeleteRequestDto dto) {
         Event event = eventRepository.findByIdOrElseThrows(id);
         UserValidator validator = new UserValidator();
 

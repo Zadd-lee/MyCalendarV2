@@ -2,6 +2,7 @@ package hello.mycalendarv2.controller;
 
 import hello.mycalendarv2.model.dto.CommentResponseDto;
 import hello.mycalendarv2.model.dto.CreateCommentRequestDto;
+import hello.mycalendarv2.model.dto.DeleteRequestDto;
 import hello.mycalendarv2.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,12 @@ public class CommentController {
         CommentResponseDto commentResponseDto = commentService.findById(id);
 
         return new ResponseEntity<>(commentResponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id, @Validated @RequestBody DeleteRequestDto dto) {
+        commentService.delete(id, dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -1,7 +1,7 @@
 package hello.mycalendarv2.service.imp;
 
 import hello.mycalendarv2.model.dto.CreateUserRequestDto;
-import hello.mycalendarv2.model.dto.DeleteUserRequestDto;
+import hello.mycalendarv2.model.dto.DeleteRequestDto;
 import hello.mycalendarv2.model.dto.UserResponseDto;
 import hello.mycalendarv2.model.entity.User;
 import hello.mycalendarv2.repository.UserRepository;
@@ -32,7 +32,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void delete(Long id, DeleteUserRequestDto dto) {
+    public void delete(Long id, DeleteRequestDto dto) {
         User user = userRepository.findByIdOrElseThrows(id);
         UserValidator validator = new UserValidator();
         validator.validatePassword(user.getPassword(), dto.getPassword());

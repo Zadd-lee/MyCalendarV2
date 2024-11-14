@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteEventRequestDto {
+public class DeleteRequestDto {
 
     @NotNull
     private String password;
