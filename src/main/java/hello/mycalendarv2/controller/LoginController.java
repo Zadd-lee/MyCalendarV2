@@ -1,7 +1,10 @@
 package hello.mycalendarv2.controller;
 
+import hello.mycalendarv2.model.dto.CreateUserRequestDto;
 import hello.mycalendarv2.model.dto.LoginRequestDto;
+import hello.mycalendarv2.model.dto.UserResponseDto;
 import hello.mycalendarv2.service.LoginService;
+import hello.mycalendarv2.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     private final LoginService loginService;
+    private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(
@@ -39,5 +43,13 @@ public class LoginController {
             session.invalidate();
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/signUp")
+    public ResponseEntity<UserResponseDto> signIn(
+            @Validated @RequestBody CreateUserRequestDto dto) {
+        UserResponseDto responseDto = userService.createUser(dto);
+
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

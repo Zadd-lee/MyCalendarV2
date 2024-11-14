@@ -14,7 +14,7 @@ import java.io.IOException;
 @Slf4j
 public class LoginCheckFilter implements Filter {
     //인증 하지 않아도 될 url path 배열
-    private static final String[] WHITE_LIST = {"/", "/user/signup", "/login", "/logout"};
+    private static final String[] WHITE_LIST = {"/", "/signUp", "/login", "/logout"};
 
 
     @Override
