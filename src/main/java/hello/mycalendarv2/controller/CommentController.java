@@ -4,10 +4,10 @@ import hello.mycalendarv2.model.dto.CommentResponseDto;
 import hello.mycalendarv2.model.dto.CreateCommentRequestDto;
 import hello.mycalendarv2.model.dto.DeleteRequestDto;
 import hello.mycalendarv2.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +17,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<CommentResponseDto> create(@Validated @RequestBody CreateCommentRequestDto dto) {
+    public ResponseEntity<CommentResponseDto> create(@Valid @RequestBody CreateCommentRequestDto dto) {
         CommentResponseDto commentResponseDto = commentService.create(dto);
         return new ResponseEntity<>(commentResponseDto, HttpStatus.OK);
     }
@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id, @Validated @RequestBody DeleteRequestDto dto) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id, @Valid @RequestBody DeleteRequestDto dto) {
         commentService.delete(id, dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

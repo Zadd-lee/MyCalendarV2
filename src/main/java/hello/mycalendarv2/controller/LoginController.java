@@ -7,10 +7,10 @@ import hello.mycalendarv2.service.LoginService;
 import hello.mycalendarv2.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(
-            @Validated @RequestBody LoginRequestDto dto,
+            @Valid @RequestBody LoginRequestDto dto,
             HttpServletRequest request) {
         loginService.login(dto);
         HttpSession session = request.getSession(true);
@@ -47,7 +47,7 @@ public class LoginController {
 
     @PostMapping("/signUp")
     public ResponseEntity<UserResponseDto> signIn(
-            @Validated @RequestBody CreateUserRequestDto dto) {
+            @Valid @RequestBody CreateUserRequestDto dto) {
         UserResponseDto responseDto = userService.createUser(dto);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);

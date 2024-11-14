@@ -4,10 +4,10 @@ import hello.mycalendarv2.model.dto.CreateUserRequestDto;
 import hello.mycalendarv2.model.dto.DeleteRequestDto;
 import hello.mycalendarv2.model.dto.UserResponseDto;
 import hello.mycalendarv2.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(
-            @Validated @RequestBody CreateUserRequestDto dto) {
+            @Valid @RequestBody   CreateUserRequestDto dto) {
         UserResponseDto responseDto = userService.createUser(dto);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id,
-            @Validated @RequestBody DeleteRequestDto dto
+            @Valid @RequestBody DeleteRequestDto dto
     ) {
         userService.delete(id,dto);
         return new ResponseEntity<>(HttpStatus.OK);

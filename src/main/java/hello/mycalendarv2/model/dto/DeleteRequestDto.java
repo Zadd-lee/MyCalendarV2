@@ -1,6 +1,6 @@
 package hello.mycalendarv2.model.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DeleteRequestDto {
 
-    @NotNull
+    @NotBlank(message = "비밀번호는 공백은 허용하지 않습니다")
     private String password;
 }
