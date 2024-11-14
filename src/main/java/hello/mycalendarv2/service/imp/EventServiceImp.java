@@ -10,6 +10,8 @@ import hello.mycalendarv2.repository.UserRepository;
 import hello.mycalendarv2.service.EventService;
 import hello.mycalendarv2.util.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,5 +46,13 @@ public class EventServiceImp implements EventService {
 
         validator.validatePassword(event.getUser().getPassword(), dto.getPassword());
         eventRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<EventResponseDto> findAll(int page, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Page<Event> pageEvent = eventRepository.findAllByOrderByUpdatedAtDesc(pageRequest);
+
+        return pageEvent.map(EventResponseDto::new);
     }
 }
