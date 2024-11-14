@@ -33,6 +33,9 @@ public class User extends DateEntity{
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Event> events = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
+
     public User(CreateUserRequestDto dto) {
         this.name = dto.getName();
         this.email = dto.getEmail();

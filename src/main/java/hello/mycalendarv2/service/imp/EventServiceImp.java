@@ -41,6 +41,7 @@ public class EventServiceImp implements EventService {
     public void delete(Long id, DeleteEventRequestDto dto) {
         Event event = eventRepository.findByIdOrElseThrows(id);
         UserValidator validator = new UserValidator();
+
         validator.validatePassword(event.getUser().getPassword(), dto.getPassword());
         eventRepository.deleteById(id);
     }
