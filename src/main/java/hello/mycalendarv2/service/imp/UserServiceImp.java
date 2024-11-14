@@ -6,6 +6,7 @@ import hello.mycalendarv2.model.dto.UserResponseDto;
 import hello.mycalendarv2.model.entity.User;
 import hello.mycalendarv2.repository.UserRepository;
 import hello.mycalendarv2.service.UserService;
+import hello.mycalendarv2.util.PasswordEncoder;
 import hello.mycalendarv2.util.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
-    UserValidator validator = new UserValidator();
 
     @Override
     public UserResponseDto createUser(CreateUserRequestDto dto) {
+        PasswordEncoder encoder = new PasswordEncoder();
         User user = new User(dto);
+        user.setPassword(encoder.encode(dto.getPassword()));
         User savedUsers = userRepository.save(user);
         return new UserResponseDto(savedUsers);
     }
@@ -32,6 +34,7 @@ public class UserServiceImp implements UserService {
     @Override
     public void delete(Long id, DeleteUserRequestDto dto) {
         User user = userRepository.findByIdOrElseThrows(id);
+        UserValidator validator = new UserValidator();
         validator.validatePassword(user.getPassword(), dto.getPassword());
         userRepository.deleteById(id);
     }

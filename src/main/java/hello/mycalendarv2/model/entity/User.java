@@ -4,6 +4,7 @@ import hello.mycalendarv2.model.dto.CreateUserRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class User extends DateEntity{
     @Column(nullable = false)
     private String email;
 
+    @Setter
     @Column(nullable = false)
     private String password;
 

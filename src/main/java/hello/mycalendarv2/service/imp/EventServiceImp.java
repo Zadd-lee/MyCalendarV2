@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class EventServiceImp implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-    private UserValidator validator = new UserValidator();
 
     @Transactional
     @Override
@@ -41,6 +40,7 @@ public class EventServiceImp implements EventService {
     @Override
     public void delete(Long id, DeleteEventRequestDto dto) {
         Event event = eventRepository.findByIdOrElseThrows(id);
+        UserValidator validator = new UserValidator();
         validator.validatePassword(event.getUser().getPassword(), dto.getPassword());
         eventRepository.deleteById(id);
     }

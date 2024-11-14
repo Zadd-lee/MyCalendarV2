@@ -14,10 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginServiceImp implements LoginService {
     private final UserRepository userRepository;
-    UserValidator validator = new UserValidator();
     @Override
     public void login(LoginRequestDto dto) {
         List<User> users = userRepository.findByEmail(dto.getEmail());
+        UserValidator validator = new UserValidator();
         User validatedUser = validator.validatePasswordWithUsers(users, dto.getPassword());
         return;
     }
