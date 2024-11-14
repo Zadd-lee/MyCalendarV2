@@ -30,7 +30,7 @@ public class User extends DateEntity{
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Event> events = new ArrayList<>();
 
     public User(CreateUserRequestDto dto) {
